@@ -24,9 +24,13 @@ package com.raywenderlich.alltherages;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RageComicListFragment.OnRageComicSelected {
 
@@ -55,22 +59,25 @@ public class MainActivity extends AppCompatActivity implements RageComicListFrag
         else
         {
             if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
                 getSupportFragmentManager()
                         .beginTransaction()
                         .remove(getSupportFragmentManager().findFragmentByTag("memeListPort"))
-                        .add(R.id.frameMemeDetail, RageComicDetailsFragment.newInstance(), "rageComicDetail")
-                        .add(R.id.frameMemeList, RageComicListFragment.newInstance(), "memeListLand")
+                        .replace(R.id.frameMemeDetail, RageComicDetailsFragment.newInstance(), "memeDetailLand")
+                        .replace(R.id.frameMemeList, RageComicListFragment.newInstance(), "memeListLand")
                         .commit();
+
 
             }
             else
             {
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .remove(getSupportFragmentManager().findFragmentByTag("memeDetailLand"))
-//                        .remove(getSupportFragmentManager().findFragmentByTag("memeListLand"))
-//                        .add(R.id.root_layout, RageComicListFragment.newInstance(), "rageComicList")
-//                        .commit();
+
+               getSupportFragmentManager()
+                        .beginTransaction()
+                        .remove(getSupportFragmentManager().findFragmentByTag("memeDetailLand"))
+                        .remove(getSupportFragmentManager().findFragmentByTag("memeListLand"))
+                        .replace(R.id.root_layout, RageComicListFragment.newInstance(), "memeListPort")
+                        .commit();
             }
         }
     }
@@ -81,12 +88,12 @@ public class MainActivity extends AppCompatActivity implements RageComicListFrag
         {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.frameMemeDetail, RageComicDetailsFragment.newInstance(imageResId, name, description, url), "memeDetailPort")
+                    .replace(R.id.frameMemeDetail, RageComicDetailsFragment.newInstance(imageResId, name, description, url), "memeDetailLand")
                     .commit();
         }else {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.root_layout, RageComicDetailsFragment.newInstance(imageResId, name, description, url), "memeDetailLand")
+                    .replace(R.id.root_layout, RageComicDetailsFragment.newInstance(imageResId, name, description, url), "memeDetailPort")
                     .addToBackStack(null)
                     .commit();
         }
