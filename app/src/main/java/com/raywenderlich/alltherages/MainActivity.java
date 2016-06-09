@@ -25,6 +25,7 @@ package com.raywenderlich.alltherages;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
@@ -62,12 +63,20 @@ public class MainActivity extends AppCompatActivity implements RageComicListFrag
         {
             if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .remove(getSupportFragmentManager().findFragmentByTag("memeListPort"))
-                        .replace(R.id.frameMemeDetail, RageComicDetailsFragment.newInstance(), "memeDetailLand")
-                        .replace(R.id.frameMemeList, RageComicListFragment.newInstance(), "memeListLand")
-                        .commit();
+                List<Fragment> f = getSupportFragmentManager().getFragments();
+                FragmentTransaction fragTran=  getSupportFragmentManager().beginTransaction();
+
+                if(getSupportFragmentManager().findFragmentByTag("memeDetailPort") != null)
+                {
+                    fragTran.remove(getSupportFragmentManager().findFragmentByTag("memeDetailPort"));
+
+                }
+
+
+                fragTran.remove(getSupportFragmentManager().findFragmentByTag("memeListPort"))
+                .replace(R.id.frameMemeList, RageComicListFragment.newInstance(), "memeListLand")
+                .replace(R.id.frameMemeDetail, RageComicDetailsFragment.newInstance(), "memeDetailLand")
+                .commit();
 
 
             }
