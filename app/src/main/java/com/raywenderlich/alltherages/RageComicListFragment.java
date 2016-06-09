@@ -24,12 +24,14 @@ package com.raywenderlich.alltherages;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +46,7 @@ public class RageComicListFragment extends Fragment {
     private String[] mDescriptions;
     private String[] mUrls;
     private OnRageComicSelected mListener;
+    private boolean mLandscapeMode;
 
     public static RageComicListFragment newInstance() {
         return new RageComicListFragment();
@@ -83,11 +86,24 @@ public class RageComicListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_rage_comic_list, container, false);
-
         final Activity activity = getActivity();
+
+        mLandscapeMode = (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+        RecyclerView.LayoutManager lom;
+
+        if(mLandscapeMode)
+        {
+            lom = new LinearLayoutManager(activity);
+        }
+        else
+        {
+            lom = new GridLayoutManager(activity,2);
+        }
+
+
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(activity, 2));
+        recyclerView.setLayoutManager(lom);
         recyclerView.setAdapter(new RageComicAdapter(activity));
         return view;
     }

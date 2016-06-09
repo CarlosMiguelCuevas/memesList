@@ -17,7 +17,14 @@ public class RageComicDetailsFragment extends Fragment {
     private static final String ARGUMENT_URL = "url";
 
     public static RageComicDetailsFragment newInstance() {
-        return new RageComicDetailsFragment();
+        final Bundle args = new Bundle();
+        args.putInt(ARGUMENT_IMAGE_RES_ID, 1);
+        args.putString(ARGUMENT_NAME, "placeHolder");
+        args.putString(ARGUMENT_DESCRIPTION, "place holder");
+        args.putString(ARGUMENT_URL, "place.holder.com");
+        final RageComicDetailsFragment fragment = new RageComicDetailsFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
     public static RageComicDetailsFragment newInstance(int imageResId, String name, String description, String url) {
 
