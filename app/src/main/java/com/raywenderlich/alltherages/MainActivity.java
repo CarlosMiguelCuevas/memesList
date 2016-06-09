@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements RageComicListFrag
                         .add(R.id.frameMemeList, RageComicListFragment.newInstance(), "memeListLand")
                         .commit();
 
+
+
             }
             else
             {

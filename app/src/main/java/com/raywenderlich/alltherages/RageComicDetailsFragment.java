@@ -17,11 +17,7 @@ public class RageComicDetailsFragment extends Fragment {
     private static final String ARGUMENT_URL = "url";
 
     public static RageComicDetailsFragment newInstance() {
-        final Bundle args = new Bundle();
-        args.putInt(ARGUMENT_IMAGE_RES_ID, 1);
-        args.putString(ARGUMENT_NAME, "placeHolder");
-        args.putString(ARGUMENT_DESCRIPTION, "place holder");
-        args.putString(ARGUMENT_URL, "place.holder.com");
+        final Bundle args = null;
         final RageComicDetailsFragment fragment = new RageComicDetailsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -49,13 +45,17 @@ public class RageComicDetailsFragment extends Fragment {
         final ImageView imageView = (ImageView) view.findViewById(R.id.comic_image);
         final TextView nameTextView = (TextView) view.findViewById(R.id.name);
         final TextView descriptionTextView = (TextView) view.findViewById(R.id.description);
-
         final Bundle args = getArguments();
-        imageView.setImageResource(args.getInt(ARGUMENT_IMAGE_RES_ID));
-        nameTextView.setText(args.getString(ARGUMENT_NAME));
-        final String text = String.format(getString(R.string.description_format), args.getString
-                (ARGUMENT_DESCRIPTION), args.getString(ARGUMENT_URL));
-        descriptionTextView.setText(text);
+
+        if(args != null)
+        {
+            imageView.setImageResource(args.getInt(ARGUMENT_IMAGE_RES_ID));
+            nameTextView.setText(args.getString(ARGUMENT_NAME));
+            final String text = String.format(getString(R.string.description_format), args.getString
+                    (ARGUMENT_DESCRIPTION), args.getString(ARGUMENT_URL));
+            descriptionTextView.setText(text);
+        }
+
         return view;
     }
 }
